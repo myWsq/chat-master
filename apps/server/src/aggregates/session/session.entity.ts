@@ -1,7 +1,6 @@
 import { randomUUID } from 'crypto';
 import { BaseEntity } from 'utils/base-entity';
 import { PromptEntity } from '../prompt/prompt.entity';
-import { UserEntity } from '../user/user.entity';
 
 export interface SessionEntityProps {
   id: string;
@@ -12,7 +11,7 @@ export interface SessionEntityProps {
 
 export interface SessionCreateParams {
   prompt: PromptEntity;
-  user: UserEntity;
+  userId: string;
 }
 
 export class SessionEntity extends BaseEntity<SessionEntityProps> {
@@ -29,10 +28,10 @@ export class SessionEntity extends BaseEntity<SessionEntityProps> {
   }
 
   static create(params: SessionCreateParams): SessionEntity {
-    const { prompt, user } = params;
+    const { prompt, userId } = params;
     const entity = new SessionEntity(randomUUID());
     entity.setPromptId(prompt);
-    entity.setUserId(user);
+    entity.setUserId(userId);
     return entity;
   }
 
@@ -40,8 +39,9 @@ export class SessionEntity extends BaseEntity<SessionEntityProps> {
     this.$set('promptId', prompt.id);
   }
 
-  setUserId(user: UserEntity) {
-    this.$set('userId', user.id);
+  setUserId(userId: string) {
+    if (!userId) throw new Error('userId is required');
+    this.$set('userId', userId);
   }
 
   resetUpdatedAt() {

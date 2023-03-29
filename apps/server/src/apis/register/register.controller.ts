@@ -1,5 +1,5 @@
-import { Controller, Inject, Post, UseGuards } from '@nestjs/common';
-import { AdminGuard } from 'src/common/admin.guard';
+import { Controller, Inject, Post } from '@nestjs/common';
+import { AuthService } from 'src/common/auth.service';
 import { RegistrationDTO } from 'src/dto/registration.dto';
 import { RegisterHandler } from './register.handler';
 
@@ -8,9 +8,12 @@ export class RegisterController {
   @Inject()
   private _registerHandler: RegisterHandler;
 
-  @UseGuards(AdminGuard)
+  @Inject()
+  private _authService: AuthService;
+
   @Post('register')
   async register(): Promise<RegistrationDTO> {
+    this._authService.validateAdmin();
     return this._registerHandler.execute();
   }
 }
