@@ -4,7 +4,17 @@
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
+      "outputs": ["dist/**"]
+    },
+    "server#build": {
+      "dependsOn": ["^build"],
+      "env": [
+        "MEILISEARCH_ENDPOINT",
+        "MEILISEARCH_MASTER_KEY",
+        "JWT_SECRET_KEY",
+        "ADMIN_TOKEN"
+      ],
+      "outputs": ["dist/**"]
     },
     "lint": {
       "outputs": []
