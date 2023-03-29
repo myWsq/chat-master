@@ -1,4 +1,4 @@
-import { PromptEntity } from 'src/aggregates/prompt/prompt.entity';
+import { PromptEntity } from '../aggregates/prompt/prompt.entity';
 
 export class PromptDTO {
   title: string;

@@ -1,7 +1,7 @@
 import { Body, Controller, Inject, Post } from '@nestjs/common';
-import { AuthService } from 'src/common/auth.service';
-import { PromptCreateDTO } from 'src/dto/prompt-create.dto';
-import { PromptDTO } from 'src/dto/prompt.dto';
+import { AuthService } from '../../common/auth.service';
+import { PromptCreateDTO } from '../../dto/prompt-create.dto';
+import { PromptDTO } from '../../dto/prompt.dto';
 import { CreatePromptHandler } from './create-prompt.handler';
 
 @Controller()

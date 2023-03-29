@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { PromptEntity } from 'src/aggregates/prompt/prompt.entity';
-import { PromptRepository } from 'src/aggregates/prompt/prompt.repository';
-import { PromptCreateDTO } from 'src/dto/prompt-create.dto';
-import { PromptDTO } from 'src/dto/prompt.dto';
-import { HandlerImpl } from 'utils/handler-impl';
+import { HandlerImpl } from '../../../utils/handler-impl';
+import { PromptEntity } from '../../aggregates/prompt/prompt.entity';
+import { PromptRepository } from '../../aggregates/prompt/prompt.repository';
+import { PromptCreateDTO } from '../../dto/prompt-create.dto';
+import { PromptDTO } from '../../dto/prompt.dto';
 
 @Injectable()
 export class CreatePromptHandler implements HandlerImpl {

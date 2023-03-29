@@ -1,8 +1,8 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import Meilisearch, { ErrorStatusCode, MeiliSearchApiError } from 'meilisearch';
-import { Config } from 'src/config/config';
 import { z } from 'zod';
+import { Config } from '../config/config';
 
 @Injectable()
 export class MeilisearchClient extends Meilisearch implements OnModuleInit {

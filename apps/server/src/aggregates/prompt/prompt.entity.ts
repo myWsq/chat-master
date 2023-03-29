@@ -1,6 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
 import { randomUUID } from 'crypto';
-import { BaseEntity } from 'utils/base-entity';
+import { BaseEntity } from '../../../utils/base-entity';
 
 export interface PromptEntityProps {
   id: string;

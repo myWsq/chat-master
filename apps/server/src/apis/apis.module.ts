@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { AggregatesModule } from 'src/aggregates/aggregates.module';
+import { AggregatesModule } from '../aggregates/aggregates.module';
 import { CreatePromptController } from './create-prompt/create-prompt.controller';
 import { CreatePromptHandler } from './create-prompt/create-prompt.handler';
 import { RegisterController } from './register/register.controller';

@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
-import { MeilisearchClient } from 'src/common/meilisearch-client';
-import { RepositoryImpl } from 'utils/repository-impl';
+import { RepositoryImpl } from '../../../utils/repository-impl';
+import { MeilisearchClient } from '../../common/meilisearch-client';
 import { PromptEntity } from './prompt.entity';
 
 export class PromptRepository implements RepositoryImpl<PromptEntity> {

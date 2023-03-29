@@ -7,8 +7,8 @@ import {
 import { ConfigService } from '@nestjs/config';
 
 import { verify, sign } from 'jsonwebtoken';
-import { Config } from 'src/config/config';
 import { z } from 'zod';
+import { Config } from '../config/config';
 
 const JwtPayloadSchema = z.object({
   id: z.string(),

@@ -1,6 +1,6 @@
 import { Controller, Inject, Post } from '@nestjs/common';
-import { AuthService } from 'src/common/auth.service';
-import { RegistrationDTO } from 'src/dto/registration.dto';
+import { AuthService } from '../../common/auth.service';
+import { RegistrationDTO } from '../../dto/registration.dto';
 import { RegisterHandler } from './register.handler';
 
 @Controller()

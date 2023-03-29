@@ -1,8 +1,8 @@
 import { Inject } from '@nestjs/common';
 import { randomUUID } from 'crypto';
-import { AuthService } from 'src/common/auth.service';
-import { RegistrationDTO } from 'src/dto/registration.dto';
-import { HandlerImpl } from 'utils/handler-impl';
+import { HandlerImpl } from '../../../utils/handler-impl';
+import { AuthService } from '../../common/auth.service';
+import { RegistrationDTO } from '../../dto/registration.dto';
 
 export class RegisterHandler implements HandlerImpl {
   @Inject()

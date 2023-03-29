@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { BaseEntity } from 'utils/base-entity';
+import { BaseEntity } from '../../../utils/base-entity';
 import { PromptEntity } from '../prompt/prompt.entity';
 
 export interface MessageEntityProps {
