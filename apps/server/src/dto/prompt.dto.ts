@@ -12,12 +12,6 @@ export class PromptDTO extends createSchemaModel(
   }),
 ) {
   static fromEntity(entity: PromptEntity) {
-    return new PromptDTO({
-      id: entity.id,
-      title: entity.title,
-      content: entity.content,
-      userId: entity.userId,
-      updatedAt: entity.updatedAt,
-    });
+    return new PromptDTO(entity);
   }
 }

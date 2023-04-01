@@ -6,7 +6,7 @@ export interface SchemaModelImpl<
   Def extends ZodTypeDef,
   Input,
 > {
-  isDTO: true;
+  isSchemaModel: true;
   schema: ZodType<Output, Def, Input>;
   new (input: Input): Output;
 }
@@ -17,16 +17,10 @@ export function createSchemaModel<
   Input,
 >(schema: ZodType<Output, Def, Input>) {
   class AugmentedDTO {
-    static isDTO = true as const;
+    static isSchemaModel = true as const;
     static schema = schema;
     constructor(input: Input) {
-      try {
-        Object.assign(this, schema.parse(input));
-      } catch (error) {
-        throw new InternalServerErrorException('Schema model parsed failed', {
-          cause: error,
-        });
-      }
+      Object.assign(this, schema.parse(input));
     }
   }
 
