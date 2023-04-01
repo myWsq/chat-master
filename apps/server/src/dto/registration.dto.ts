@@ -1,11 +1,10 @@
-export class RegistrationDTO {
-  userId: string;
-  token: string;
-  expiredAt: Date;
+import { z } from 'zod';
+import { createSchemaModel } from '../../utils/create-schema-model';
 
-  constructor(params: { userId: string; token: string; expiredAt: Date }) {
-    this.userId = params.userId;
-    this.token = params.token;
-    this.expiredAt = params.expiredAt;
-  }
-}
+export class RegistrationDTO extends createSchemaModel(
+  z.object({
+    userId: z.string(),
+    token: z.string(),
+    expiredAt: z.coerce.date(),
+  }),
+) {}

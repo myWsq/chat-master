@@ -16,6 +16,6 @@ export class CreatePromptHandler implements HandlerImpl {
       userId,
     });
     await this._promptRepository.save(prompt);
-    return new PromptDTO(prompt);
+    return PromptDTO.fromEntity(prompt);
   }
 }
