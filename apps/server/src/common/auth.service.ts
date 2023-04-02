@@ -34,8 +34,7 @@ export class AuthService {
     return this._userId;
   }
 
-  signJwt(userId: string) {
-    const expiresIn = 30 * 24 * 3600;
+  signJwt(userId: string, expiresIn: number) {
     const token = sign(
       { id: userId },
       this._configService.getOrThrow('JWT_SECRET_KEY'),

@@ -1,4 +1,3 @@
-import { InternalServerErrorException } from '@nestjs/common';
 import { ZodType, ZodTypeDef } from 'zod';
 
 export interface SchemaModelImpl<

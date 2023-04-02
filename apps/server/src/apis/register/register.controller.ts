@@ -1,7 +1,8 @@
-import { Controller, Inject, Post } from '@nestjs/common';
+import { Body, Controller, Inject, Post } from '@nestjs/common';
 import { AuthService } from '../../common/auth.service';
 import { RegistrationDTO } from '../../dto/registration.dto';
 import { RegisterHandler } from './register.handler';
+import { RegisterDTO } from '../../dto/register.dto';
 
 @Controller()
 export class RegisterController {
@@ -12,8 +13,8 @@ export class RegisterController {
   private _authService: AuthService;
 
   @Post('register')
-  async register(): Promise<RegistrationDTO> {
+  async register(@Body() body: RegisterDTO): Promise<RegistrationDTO> {
     this._authService.validateAdmin();
-    return this._registerHandler.execute();
+    return this._registerHandler.execute(body);
   }
 }
