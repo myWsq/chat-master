@@ -1,20 +1,17 @@
 import { Inject } from '@nestjs/common';
-import { randomUUID } from 'crypto';
 import { HandlerImpl } from '../../../utils/handler-impl';
-import { AuthService } from '../../common/auth.service';
-import { RegistrationDTO } from '../../dto/registration.dto';
 import { RegisterDTO } from '../../dto/register.dto';
+import { UserRepository } from '../../aggregates/user/user.repository';
+import { UserEntity } from '../../aggregates/user/user.entity';
+import { UserDTO } from '../../dto/user.dto';
 
 export class RegisterHandler implements HandlerImpl {
   @Inject()
-  private _authService: AuthService;
+  private _userRepository: UserRepository;
 
-  execute(dto: RegisterDTO): RegistrationDTO {
-    const userId = randomUUID();
-    const jwt = this._authService.signJwt(userId, dto.expiresIn);
-    return new RegistrationDTO({
-      userId,
-      ...jwt,
-    });
+  async execute(dto: RegisterDTO): Promise<UserDTO> {
+    const user = UserEntity.create(dto);
+    await this._userRepository.save(user);
+    return UserDTO.fromEntity(user);
   }
 }

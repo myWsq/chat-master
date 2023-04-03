@@ -12,9 +12,9 @@ export class CreatePromptController {
   @Inject()
   private _authService: AuthService;
 
-  @Post('create-prompt')
+  @Post('/create-prompt')
   async createPrompt(@Body() body: PromptCreateDTO): Promise<PromptDTO> {
-    const userId = this._authService.getUserId();
-    return this._createPromptHandler.execute(body, userId);
+    const user = this._authService.getAuthorizedUser();
+    return this._createPromptHandler.execute(body, user);
   }
 }

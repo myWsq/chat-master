@@ -13,10 +13,14 @@ export class MeilisearchClient extends Meilisearch implements OnModuleInit {
     });
   }
 
-  static Indexes = ['prompt', 'message'] as const;
+  static Indexes = ['prompt', 'message', 'user'] as const;
   static IndexEnum = z.enum(MeilisearchClient.Indexes).enum;
 
   async onModuleInit() {
+    await this.initIndex();
+  }
+
+  async initIndex() {
     const tasks = MeilisearchClient.Indexes.map(async (index) => {
       try {
         await this.getIndex(index);
@@ -32,5 +36,12 @@ export class MeilisearchClient extends Meilisearch implements OnModuleInit {
       }
     });
     await Promise.all(tasks);
+    await this._configUserIndex();
+  }
+
+  private async _configUserIndex() {
+    await this.index('user').updateSettings({
+      filterableAttributes: ['apiKey'],
+    });
   }
 }

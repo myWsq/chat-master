@@ -1,6 +1,7 @@
 import { BadRequestException } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import { BaseEntity } from '../../../utils/base-entity';
+import { UserEntity } from '../user/user.entity';
 
 export interface PromptEntityProps {
   id: string;
@@ -13,7 +14,7 @@ export interface PromptEntityProps {
 export interface PromptEntityCreateParams {
   title: string;
   content: string;
-  userId: string;
+  user: UserEntity;
 }
 
 export class PromptEntity extends BaseEntity<PromptEntityProps> {
@@ -34,15 +35,16 @@ export class PromptEntity extends BaseEntity<PromptEntityProps> {
   }
 
   static create(params: PromptEntityCreateParams): PromptEntity {
-    const { title, content, userId } = params;
+    const { title, content, user } = params;
     const entity = new PromptEntity(randomUUID());
-    entity.setTitle(title);
-    entity.setContent(content);
-    entity.setUserId(userId);
+    entity.setUserId(user);
+    entity.setTitle(title, user);
+    entity.setContent(content, user);
     return entity;
   }
 
-  setTitle(title: string) {
+  setTitle(title: string, user: UserEntity) {
+    this.validateOwner(user);
     if (!title) {
       throw new BadRequestException('title is required');
     }
@@ -53,7 +55,8 @@ export class PromptEntity extends BaseEntity<PromptEntityProps> {
     this.resetUpdatedAt();
   }
 
-  setContent(content: string) {
+  setContent(content: string, user: UserEntity) {
+    this.validateOwner(user);
     if (!content) {
       throw new BadRequestException('content is required');
     }
@@ -64,9 +67,14 @@ export class PromptEntity extends BaseEntity<PromptEntityProps> {
     this.resetUpdatedAt();
   }
 
-  setUserId(userId: string) {
-    if (!userId) throw new BadRequestException('userId is required');
-    this.$set('userId', userId);
+  validateOwner(user: UserEntity) {
+    if (this.userId !== user.id) {
+      throw new BadRequestException('You are not the owner of this prompt');
+    }
+  }
+
+  setUserId(user: UserEntity) {
+    this.$set('userId', user.id);
   }
 
   resetUpdatedAt() {

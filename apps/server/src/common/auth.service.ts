@@ -4,21 +4,15 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-
-import { verify, sign } from 'jsonwebtoken';
-import { z } from 'zod';
-import { Config } from '../config/config';
-
-const JwtPayloadSchema = z.object({
-  id: z.string(),
-});
+import { UserEntity } from '../aggregates/user/user.entity';
+import { UserRepository } from '../aggregates/user/user.repository';
 
 @Injectable()
 export class AuthService {
   @Inject()
-  private _configService: ConfigService<Config>;
-  private _userId: string;
+  private _userRepository: UserRepository;
+
+  private _user: UserEntity;
   private _isAdmin = false;
 
   validateAdmin() {
@@ -27,36 +21,19 @@ export class AuthService {
     }
   }
 
-  getUserId(): string {
-    if (!this._userId) {
+  getAuthorizedUser(): UserEntity {
+    if (!this._user) {
       throw new UnauthorizedException('You are not logged in.');
     }
-    return this._userId;
+    return this._user;
   }
 
-  signJwt(userId: string, expiresIn: number) {
-    const token = sign(
-      { id: userId },
-      this._configService.getOrThrow('JWT_SECRET_KEY'),
-      {
-        expiresIn,
-      },
-    );
-    const expiredAt = new Date(Date.now() + expiresIn * 1000);
-    return { token, expiredAt };
-  }
-
-  $setUserId(jwt: string) {
-    try {
-      const payload = verify(
-        jwt,
-        this._configService.getOrThrow('JWT_SECRET_KEY'),
-      );
-      const { id } = JwtPayloadSchema.parse(payload);
-      this._userId = id;
-    } catch (error) {
-      throw new UnauthorizedException(error);
+  async $setUser(apiKey: string) {
+    const user = await this._userRepository.findByApiKey(apiKey);
+    if (!user) {
+      throw new UnauthorizedException('Invalid API key.');
     }
+    this._user = user;
   }
 
   $markAsAdmin() {

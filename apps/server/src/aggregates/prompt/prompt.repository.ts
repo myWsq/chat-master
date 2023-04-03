@@ -25,6 +25,8 @@ export class PromptRepository implements RepositoryImpl<PromptEntity> {
     const index = await this._meilisearchClient.getIndex(
       MeilisearchClient.IndexEnum.prompt,
     );
-    index.addDocuments([entity.$props]);
+
+    const tasks = await index.addDocuments([entity.$props]);
+    console.log(tasks);
   }
 }

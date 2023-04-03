@@ -12,9 +12,9 @@ export class UpdatePromptController {
   @Inject()
   private _authService: AuthService;
 
-  @Post('update-prompt')
+  @Post('/update-prompt')
   async updatePrompt(@Body() body: PromptUpdateDTO): Promise<PromptDTO> {
-    const userId = this._authService.getUserId();
-    return this._updatePromptHandler.execute(body, userId);
+    const user = this._authService.getAuthorizedUser();
+    return this._updatePromptHandler.execute(body, user);
   }
 }

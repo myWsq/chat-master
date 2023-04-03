@@ -4,9 +4,11 @@ import { AuthService } from './auth.service';
 import { MeilisearchClient } from './meilisearch-client';
 import { APP_PIPE } from '@nestjs/core';
 import { ValidationPipe } from './validation.pipe';
+import { AggregatesModule } from '../aggregates/aggregates.module';
 
 @Global()
 @Module({
+  imports: [AggregatesModule],
   providers: [
     MeilisearchClient,
     AuthService,

@@ -6,14 +6,14 @@ export class AuthMiddleware implements NestMiddleware {
   @Inject()
   private _authService: AuthService;
 
-  use(req: any, _res: any, next: any) {
+  async use(req: any, _res: any, next: any) {
     const adminToken = req.headers['x-admin-token'];
-    const userToken = req.headers['authorization'];
+    const apiKey = req.headers['x-api-key'];
     if (adminToken) {
       this._authService.$markAsAdmin();
     }
-    if (userToken) {
-      this._authService.$setUserId(userToken);
+    if (apiKey) {
+      await this._authService.$setUser(apiKey);
     }
     next();
   }
