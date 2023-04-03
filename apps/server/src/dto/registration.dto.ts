@@ -5,6 +5,6 @@ export class RegistrationDTO extends createSchemaModel(
   z.object({
     userId: z.string(),
     token: z.string(),
-    expiredAt: z.coerce.date(),
+    expiredAt: z.date(),
   }),
 ) {}
