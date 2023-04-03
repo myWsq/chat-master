@@ -1,10 +1,11 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { HandlerImpl } from '../../../utils/handler-impl';
 import { RegisterDTO } from '../../dto/register.dto';
 import { UserRepository } from '../../aggregates/user/user.repository';
 import { UserEntity } from '../../aggregates/user/user.entity';
 import { UserDTO } from '../../dto/user.dto';
 
+@Injectable()
 export class RegisterHandler implements HandlerImpl {
   @Inject()
   private _userRepository: UserRepository;

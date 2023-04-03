@@ -1,37 +1,31 @@
 import { randomUUID } from 'crypto';
 import { BaseEntity } from '../../../utils/base-entity';
 import { PromptEntity } from '../prompt/prompt.entity';
-
-export interface SessionEntityProps {
-  id: string;
-  promptId: string;
-  userId: string;
-  updatedAt: Date;
-}
+import { Session } from '@prisma/client';
 
 export interface SessionCreateParams {
   prompt: PromptEntity;
-  userId: string;
 }
 
-export class SessionEntity extends BaseEntity<SessionEntityProps> {
+export class SessionEntity extends BaseEntity<Session> {
   get promptId() {
-    return this.$getOrThrow('promptId');
+    return this.$get('promptId');
   }
 
   get userId() {
-    return this.$getOrThrow('userId');
+    return this.$get('userId');
   }
 
-  get updatedAt() {
-    return this.$getOrThrow('updatedAt');
+  get createdAt() {
+    return this.$get('createdAt');
   }
 
   static create(params: SessionCreateParams): SessionEntity {
-    const { prompt, userId } = params;
+    const { prompt } = params;
     const entity = new SessionEntity(randomUUID());
     entity.setPromptId(prompt);
-    entity.setUserId(userId);
+    entity.setUserIdFromPrompt(prompt);
+    entity.resetCreatedAt();
     return entity;
   }
 
@@ -39,12 +33,11 @@ export class SessionEntity extends BaseEntity<SessionEntityProps> {
     this.$set('promptId', prompt.id);
   }
 
-  setUserId(userId: string) {
-    if (!userId) throw new Error('userId is required');
-    this.$set('userId', userId);
+  setUserIdFromPrompt(prompt: PromptEntity) {
+    this.$set('userId', prompt.userId);
   }
 
-  resetUpdatedAt() {
-    this.$set('updatedAt', new Date());
+  resetCreatedAt() {
+    this.$set('createdAt', new Date());
   }
 }

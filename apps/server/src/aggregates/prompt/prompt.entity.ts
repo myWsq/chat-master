@@ -33,6 +33,7 @@ export class PromptEntity extends BaseEntity<Prompt> {
     entity.setUserId(user);
     entity.setTitle(title, user);
     entity.setContent(content, user);
+    entity.resetUpdatedAt();
     return entity;
   }
 

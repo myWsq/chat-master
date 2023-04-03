@@ -1,57 +1,41 @@
 import { randomUUID } from 'crypto';
 import { BaseEntity } from '../../../utils/base-entity';
-import { PromptEntity } from '../prompt/prompt.entity';
-
-export interface MessageEntityProps {
-  id: string;
-  role: string;
-  content: string;
-  userId: string;
-  promptId: string;
-  sessionKey: string;
-  createdAt: Date;
-}
+import { Message } from '@prisma/client';
+import { SessionEntity } from '../session/session.entity';
 
 export interface MessageEntityCreateParams {
-  content: string;
   role: string;
-  prompt: PromptEntity;
-  sessionKey: string;
+  content: string;
+  session: SessionEntity;
 }
 
-export class MessageEntity extends BaseEntity<MessageEntityProps> {
+export class MessageEntity extends BaseEntity<Message> {
   get content() {
-    return this.$getOrThrow('content');
+    return this.$get('content');
   }
 
   get role() {
-    return this.$getOrThrow('role') as 'user' | 'bot';
+    return this.$get('role') as 'user' | 'bot';
   }
 
-  get userId() {
-    return this.$getOrThrow('userId');
-  }
-
-  get sessionKey() {
-    return this.$getOrThrow('sessionKey');
+  get sessionId() {
+    return this.$get('sessionId');
   }
 
   get promptId() {
-    return this.$getOrThrow('promptId');
+    return this.$get('promptId');
   }
 
   get createdAt() {
-    return this.$getOrThrow('createdAt');
+    return this.$get('createdAt');
   }
 
   static create(params: MessageEntityCreateParams): MessageEntity {
-    const { content, sessionKey, role, prompt } = params;
     const entity = new MessageEntity(randomUUID());
-    entity.setContent(content);
-    entity.setRole(role);
-    entity.setUserId(prompt);
-    entity.setPromptId(prompt);
-    entity.setSessionKey(sessionKey);
+    entity.setContent(params.content);
+    entity.setRole(params.role);
+    entity.setSessionId(params.session);
+    entity.setPromptIdFromSession(params.session);
     entity.resetCreatedAt();
     return entity;
   }
@@ -75,22 +59,12 @@ export class MessageEntity extends BaseEntity<MessageEntityProps> {
     this.$set('role', role);
   }
 
-  setUserId(prompt: PromptEntity) {
-    this.$set('userId', prompt.userId);
+  setSessionId(session: SessionEntity) {
+    this.$set('sessionId', session.id);
   }
 
-  setSessionKey(sessionKey: string) {
-    if (sessionKey.length > 100) {
-      throw new Error('Session key cannot be longer than 100 characters');
-    }
-    if (sessionKey.trim().length === 0) {
-      throw new Error('Session key cannot be empty');
-    }
-    this.$set('sessionKey', sessionKey);
-  }
-
-  setPromptId(prompt: PromptEntity) {
-    this.$set('promptId', prompt.id);
+  setPromptIdFromSession(session: SessionEntity) {
+    this.$set('promptId', session.promptId);
   }
 
   resetCreatedAt() {

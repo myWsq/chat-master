@@ -11,10 +11,10 @@ datasource db {
 }
 
 model User {
-  id    String @id
-  tag   String
+  id     String @id
+  tag    String
   apiKey String @unique
-  quota Int
+  quota  Int
 }
 
 model Prompt {
@@ -24,19 +24,27 @@ model Prompt {
   userId    String
   updatedAt DateTime
 
-  @@index(userId)
+  @@index([userId])
+}
+
+model Session {
+  id        String   @id
+  promptId  String
+  userId    String
+  createdAt DateTime
+
+  @@index([promptId])
+  @@index([userId])
 }
 
 model Message {
   id        String   @id
   role      String
   content   String
-  userId    String
-  promptId  String
   sessionId String
+  promptId  String
   createdAt DateTime
 
-  @@index(userId)
-  @@index(promptId)
-  @@index(sessionId)
+  @@index([promptId])
+  @@index([sessionId])
 }

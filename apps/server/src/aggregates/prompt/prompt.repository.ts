@@ -1,8 +1,9 @@
-import { Inject, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { RepositoryImpl } from '../../../utils/repository-impl';
 import { PromptEntity } from './prompt.entity';
 import { PrismaService } from '../../common/prisma.service';
 
+@Injectable()
 export class PromptRepository implements RepositoryImpl<PromptEntity> {
   @Inject()
   private _prismaService: PrismaService;
