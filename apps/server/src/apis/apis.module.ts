@@ -6,6 +6,8 @@ import { RegisterController } from './register/register.controller';
 import { RegisterHandler } from './register/register.handler';
 import { UpdatePromptController } from './update-prompt/update-prompt.controller';
 import { UpdatePromptHandler } from './update-prompt/update-prompt.handler';
+import { CreateMessageController } from './create-message/create-message.controller';
+import { CreateMessageHandler } from './create-message/create-message.handler';
 
 @Module({
   imports: [AggregatesModule],
@@ -13,7 +15,13 @@ import { UpdatePromptHandler } from './update-prompt/update-prompt.handler';
     RegisterController,
     CreatePromptController,
     UpdatePromptController,
+    CreateMessageController,
   ],
-  providers: [RegisterHandler, CreatePromptHandler, UpdatePromptHandler],
+  providers: [
+    RegisterHandler,
+    CreatePromptHandler,
+    UpdatePromptHandler,
+    CreateMessageHandler,
+  ],
 })
 export class ApisModule {}

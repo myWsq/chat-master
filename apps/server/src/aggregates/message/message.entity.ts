@@ -2,6 +2,7 @@ import { randomUUID } from 'crypto';
 import { BaseEntity } from '../../../utils/base-entity';
 import { Message } from '@prisma/client';
 import { SessionEntity } from '../session/session.entity';
+import { BadRequestException } from '@nestjs/common';
 
 export interface MessageEntityCreateParams {
   role: string;
@@ -42,19 +43,21 @@ export class MessageEntity extends BaseEntity<Message> {
 
   setContent(content: string) {
     if (content.length > 20000) {
-      throw new Error(
+      throw new BadRequestException(
         'Message content cannot be longer than 20,000 characters',
       );
     }
     if (content.trim().length === 0) {
-      throw new Error('Message content cannot be empty');
+      throw new BadRequestException('Message content cannot be empty');
     }
     this.$set('content', content);
   }
 
   setRole(role: string) {
     if (!['user', 'bot'].includes(role)) {
-      throw new Error('Message role must be either "user" or "bot"');
+      throw new BadRequestException(
+        'Message role must be either "user" or "bot"',
+      );
     }
     this.$set('role', role);
   }

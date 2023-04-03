@@ -31,14 +31,13 @@ export class PromptEntity extends BaseEntity<Prompt> {
     const { title, content, user } = params;
     const entity = new PromptEntity(randomUUID());
     entity.setUserId(user);
-    entity.setTitle(title, user);
-    entity.setContent(content, user);
+    entity.setTitle(title);
+    entity.setContent(content);
     entity.resetUpdatedAt();
     return entity;
   }
 
-  setTitle(title: string, user: UserEntity) {
-    this.validateOwner(user);
+  setTitle(title: string) {
     if (!title) {
       throw new BadRequestException('title is required');
     }
@@ -49,8 +48,7 @@ export class PromptEntity extends BaseEntity<Prompt> {
     this.resetUpdatedAt();
   }
 
-  setContent(content: string, user: UserEntity) {
-    this.validateOwner(user);
+  setContent(content: string) {
     if (!content) {
       throw new BadRequestException('content is required');
     }
@@ -59,12 +57,6 @@ export class PromptEntity extends BaseEntity<Prompt> {
     }
     this.$set('content', content);
     this.resetUpdatedAt();
-  }
-
-  validateOwner(user: UserEntity) {
-    if (this.userId !== user.id) {
-      throw new BadRequestException('You are not the owner of this prompt');
-    }
   }
 
   setUserId(user: UserEntity) {
