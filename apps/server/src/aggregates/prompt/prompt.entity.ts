@@ -2,14 +2,7 @@ import { BadRequestException } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import { BaseEntity } from '../../../utils/base-entity';
 import { UserEntity } from '../user/user.entity';
-
-export interface PromptEntityProps {
-  id: string;
-  title: string;
-  content: string;
-  userId: string;
-  updatedAt: Date;
-}
+import { Prompt } from '@prisma/client';
 
 export interface PromptEntityCreateParams {
   title: string;
@@ -17,21 +10,21 @@ export interface PromptEntityCreateParams {
   user: UserEntity;
 }
 
-export class PromptEntity extends BaseEntity<PromptEntityProps> {
+export class PromptEntity extends BaseEntity<Prompt> {
   get title() {
-    return this.$getOrThrow('title');
+    return this.$get('title');
   }
 
   get content() {
-    return this.$getOrThrow('content');
+    return this.$get('content');
   }
 
   get userId() {
-    return this.$getOrThrow('userId');
+    return this.$get('userId');
   }
 
   get updatedAt() {
-    return this.$getOrThrow('updatedAt');
+    return this.$get('updatedAt');
   }
 
   static create(params: PromptEntityCreateParams): PromptEntity {

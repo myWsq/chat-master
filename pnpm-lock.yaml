@@ -8,7 +8,7 @@ importers:
       turbo: latest
     devDependencies:
       prettier: 2.8.7
-      turbo: 1.8.6
+      turbo: 1.8.8
 
   apps/server:
     specifiers:
@@ -19,12 +19,14 @@ importers:
       '@nestjs/platform-express': ^9.0.0
       '@nestjs/schematics': ^9.0.0
       '@nestjs/testing': ^9.0.0
+      '@prisma/client': ^4.12.0
       '@types/jest': 28.1.4
       '@types/jsonwebtoken': ^9.0.1
       '@types/node': ^16.0.0
       '@types/supertest': ^2.0.11
       '@typescript-eslint/eslint-plugin': ^5.0.0
       '@typescript-eslint/parser': ^5.0.0
+      dotenv-cli: ^7.1.0
       eslint: ^8.0.1
       eslint-config-prettier: ^8.3.0
       eslint-plugin-prettier: ^4.0.0
@@ -32,6 +34,7 @@ importers:
       jsonwebtoken: ^9.0.0
       meilisearch: ^0.32.0
       prettier: ^2.3.2
+      prisma: ^4.12.0
       reflect-metadata: ^0.1.13
       rimraf: ^3.0.2
       rxjs: ^7.2.0
@@ -48,6 +51,7 @@ importers:
       '@nestjs/config': 2.3.1_jy37pi22pqa22ux5geb72eebiu
       '@nestjs/core': 9.3.12_qhubmme3ystyvorrsy6sfc2ome
       '@nestjs/platform-express': 9.3.12_ge4qplnzbmfyi5znl534zhtkn4
+      '@prisma/client': 4.12.0_prisma@4.12.0
       jsonwebtoken: 9.0.0
       meilisearch: 0.32.0
       reflect-metadata: 0.1.13
@@ -64,11 +68,13 @@ importers:
       '@types/supertest': 2.0.12
       '@typescript-eslint/eslint-plugin': 5.57.0_x4rubgibnu7ujqspfqdeho4yiu
       '@typescript-eslint/parser': 5.57.0_ip5up2nocltd47wbnuyybe5dxu
+      dotenv-cli: 7.1.0
       eslint: 8.37.0
       eslint-config-prettier: 8.8.0_eslint@8.37.0
       eslint-plugin-prettier: 4.2.1_ybb3aapb7235womryl2tm5ze2u
       jest: 28.1.2_zjja2l2jzwdb42w4yjw5xd76pa
       prettier: 2.8.7
+      prisma: 4.12.0
       source-map-support: 0.5.21
       supertest: 6.3.3
       ts-jest: 28.0.5_rv5warumbl7utqrnn4zdksbofm
@@ -1070,6 +1076,28 @@ packages:
       node-fetch: 2.6.9
     transitivePeerDependencies:
       - encoding
+
+  /@prisma/client/4.12.0_prisma@4.12.0:
+    resolution: {integrity: sha512-j9/ighfWwux97J2dS15nqhl60tYoH8V0IuSsgZDb6bCFcQD3fXbXmxjYC8GHhIgOk3lB7Pq+8CwElz2MiDpsSg==}
+    engines: {node: '>=14.17'}
+    requiresBuild: true
+    peerDependencies:
+      prisma: '*'
+    peerDependenciesMeta:
+      prisma:
+        optional: true
+    dependencies:
+      '@prisma/engines-version': 4.12.0-67.659ef412370fa3b41cd7bf6e94587c1dfb7f67e7
+      prisma: 4.12.0
+    dev: false
+
+  /@prisma/engines-version/4.12.0-67.659ef412370fa3b41cd7bf6e94587c1dfb7f67e7:
+    resolution: {integrity: sha512-JIHNj5jlXb9mcaJwakM0vpgRYJIAurxTUqM0iX0tfEQA5XLZ9ONkIckkhuAKdAzocZ+80GYg7QSsfpjg7OxbOA==}
+    dev: false
+
+  /@prisma/engines/4.12.0:
+    resolution: {integrity: sha512-0alKtnxhNB5hYU+ymESBlGI4b9XrGGSdv7Ud+8TE/fBNOEhIud0XQsAR+TrvUZgS4na5czubiMsODw0TUrgkIA==}
+    requiresBuild: true
 
   /@sinclair/typebox/0.24.51:
     resolution: {integrity: sha512-1P1OROm/rdubP5aFDSZQILU0vrLCJ4fvHt6EoqHEM+2D/G5MK3bIaymUKLit8Js9gbns5UyJnkP/TZROLw4tUA==}
@@ -2170,15 +2198,23 @@ packages:
       esutils: 2.0.3
     dev: true
 
+  /dotenv-cli/7.1.0:
+    resolution: {integrity: sha512-motytjZFQB3ZtGTIN4c0vnFgv4kuNZ2WxVnGY6PVFiygCzkm3IFBBguDUzezd9HgNA0OYYd6vNCWlozs0Q1Zxg==}
+    hasBin: true
+    dependencies:
+      cross-spawn: 7.0.3
+      dotenv: 16.0.3
+      dotenv-expand: 10.0.0
+      minimist: 1.2.8
+    dev: true
+
   /dotenv-expand/10.0.0:
     resolution: {integrity: sha512-GopVGCpVS1UKH75VKHGuQFqS1Gusej0z4FyQkPdwjil2gNIv+LNsqBlboOzpJFZKVT95GkCyWJbBSdFEFUWI2A==}
     engines: {node: '>=12'}
-    dev: false
 
   /dotenv/16.0.3:
     resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
     engines: {node: '>=12'}
-    dev: false
 
   /ecdsa-sig-formatter/1.0.11:
     resolution: {integrity: sha512-nagl3RYrbNv6kQkeJIpt6NJZy8twLB/2vtz6yN9Z4vRKHN4/QZJIEbqohALSgwKdnksuY3k5Addp5lg8sVoVcQ==}
@@ -4072,6 +4108,14 @@ packages:
       react-is: 18.2.0
     dev: true
 
+  /prisma/4.12.0:
+    resolution: {integrity: sha512-xqVper4mbwl32BWzLpdznHAYvYDWQQWK2tBfXjdUD397XaveRyAP7SkBZ6kFlIg8kKayF4hvuaVtYwXd9BodAg==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+    requiresBuild: true
+    dependencies:
+      '@prisma/engines': 4.12.0
+
   /process-nextick-args/2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
 
@@ -4778,65 +4822,65 @@ packages:
       typescript: 4.9.5
     dev: true
 
-  /turbo-darwin-64/1.8.6:
-    resolution: {integrity: sha512-VlXkQR0TEBAEyBRsvAXBax+fj1EdPKPliwBaCnRLiDUcA/8wYlKte/Kk6ubmj9E0n7U/B4keCxxHiJZqW/5Rqg==}
+  /turbo-darwin-64/1.8.8:
+    resolution: {integrity: sha512-18cSeIm7aeEvIxGyq7PVoFyEnPpWDM/0CpZvXKHpQ6qMTkfNt517qVqUTAwsIYqNS8xazcKAqkNbvU1V49n65Q==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-darwin-arm64/1.8.6:
-    resolution: {integrity: sha512-w4L2QLj90ex68UXxTPoqtZPl8mWzc6a1RtPjQhoxAWtZf9T2WXi813dCzYEbVUVC09/DOW/VxZRN7sb2r0KP9A==}
+  /turbo-darwin-arm64/1.8.8:
+    resolution: {integrity: sha512-ruGRI9nHxojIGLQv1TPgN7ud4HO4V8mFBwSgO6oDoZTNuk5ybWybItGR+yu6fni5vJoyMHXOYA2srnxvOc7hjQ==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-64/1.8.6:
-    resolution: {integrity: sha512-eV245jefIhMAZskqQKalFwreC5UEdQcuHcBiWcgUk0py76fbwB7+1HfH5cmeJlb3a1sB6f3H0HHmGPmb34feCA==}
+  /turbo-linux-64/1.8.8:
+    resolution: {integrity: sha512-N/GkHTHeIQogXB1/6ZWfxHx+ubYeb8Jlq3b/3jnU4zLucpZzTQ8XkXIAfJG/TL3Q7ON7xQ8yGOyGLhHL7MpFRg==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-arm64/1.8.6:
-    resolution: {integrity: sha512-Kiw3nyEvNU6Bpil4zE5FwhasPAOi59R4YdCmjJp0Sen6V9u+/Jij6SWwaoUdATORJLiYQBbhontWBH55B53VDw==}
+  /turbo-linux-arm64/1.8.8:
+    resolution: {integrity: sha512-hKqLbBHgUkYf2Ww8uBL9UYdBFQ5677a7QXdsFhONXoACbDUPvpK4BKlz3NN7G4NZ+g9dGju+OJJjQP0VXRHb5w==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-64/1.8.6:
-    resolution: {integrity: sha512-34BkAG9r4nE00xeMeVahaF82h8R6SO+IIOcD60fNr2p+Ch+YcQa+DbEWA/KUj3coUTIiNP5XnRCLRUYADdlxjQ==}
+  /turbo-windows-64/1.8.8:
+    resolution: {integrity: sha512-2ndjDJyzkNslXxLt+PQuU21AHJWc8f6MnLypXy3KsN4EyX/uKKGZS0QJWz27PeHg0JS75PVvhfFV+L9t9i+Yyg==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-arm64/1.8.6:
-    resolution: {integrity: sha512-4jWUaI7Lmonp2I3x81GruiCYd0aQsG/xDOYhuv9+j2yIgB/UHJFz/P8PWp/nziwPtGpRd/AheDlPzzyd9lWoqw==}
+  /turbo-windows-arm64/1.8.8:
+    resolution: {integrity: sha512-xCA3oxgmW9OMqpI34AAmKfOVsfDljhD5YBwgs0ZDsn5h3kCHhC4x9W5dDk1oyQ4F5EXSH3xVym5/xl1J6WRpUg==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo/1.8.6:
-    resolution: {integrity: sha512-6IOOaa8ytgjnSCTnp3LKAd2uGBZ/Kmx8ZPlI/YMWuKMUqvkXKLbh+w76ApMgMm+faUqti+QujVWovCu2kY6KuQ==}
+  /turbo/1.8.8:
+    resolution: {integrity: sha512-qYJ5NjoTX+591/x09KgsDOPVDUJfU9GoS+6jszQQlLp1AHrf1wRFA3Yps8U+/HTG03q0M4qouOfOLtRQP4QypA==}
     hasBin: true
     requiresBuild: true
     optionalDependencies:
-      turbo-darwin-64: 1.8.6
-      turbo-darwin-arm64: 1.8.6
-      turbo-linux-64: 1.8.6
-      turbo-linux-arm64: 1.8.6
-      turbo-windows-64: 1.8.6
-      turbo-windows-arm64: 1.8.6
+      turbo-darwin-64: 1.8.8
+      turbo-darwin-arm64: 1.8.8
+      turbo-linux-64: 1.8.8
+      turbo-linux-arm64: 1.8.8
+      turbo-windows-64: 1.8.8
+      turbo-windows-arm64: 1.8.8
     dev: true
 
   /type-check/0.4.0:

@@ -1,32 +1,31 @@
-import { Inject, UnprocessableEntityException } from '@nestjs/common';
+import { Inject, NotFoundException } from '@nestjs/common';
 import { RepositoryImpl } from '../../../utils/repository-impl';
-import { MeilisearchClient } from '../../common/meilisearch-client';
-import { PromptEntity, PromptEntityProps } from './prompt.entity';
+import { PromptEntity } from './prompt.entity';
+import { PrismaService } from '../../common/prisma.service';
 
 export class PromptRepository implements RepositoryImpl<PromptEntity> {
   @Inject()
-  private _meilisearchClient: MeilisearchClient;
+  private _prismaService: PrismaService;
 
   async load(id: string): Promise<PromptEntity> {
-    const index = await this._meilisearchClient.getIndex(
-      MeilisearchClient.IndexEnum.prompt,
-    );
-    return index
-      .getDocument(id)
-      .then((props: PromptEntityProps) => new PromptEntity(props))
-      .catch((error) => {
-        throw new UnprocessableEntityException('Prompt loaded failed.', {
-          cause: error,
-        });
-      });
+    const model = await this._prismaService.prompt.findUnique({
+      where: {
+        id,
+      },
+    });
+    if (!model) {
+      throw new NotFoundException('Prompt not found.');
+    }
+    return new PromptEntity(model);
   }
 
   async save(entity: PromptEntity): Promise<void> {
-    const index = await this._meilisearchClient.getIndex(
-      MeilisearchClient.IndexEnum.prompt,
-    );
-
-    const tasks = await index.addDocuments([entity.$props]);
-    console.log(tasks);
+    await this._prismaService.prompt.upsert({
+      where: {
+        id: entity.id,
+      },
+      create: entity.$props,
+      update: entity.$props,
+    });
   }
 }

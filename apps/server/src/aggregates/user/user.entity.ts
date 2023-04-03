@@ -1,28 +1,22 @@
 import { randomUUID } from 'crypto';
 import { BaseEntity } from '../../../utils/base-entity';
 import { BadRequestException } from '@nestjs/common';
-
-export interface UserEntityProps {
-  id: string;
-  apiKey: string;
-  tag: string;
-  quota: number;
-}
+import { User } from '@prisma/client';
 
 export interface UserEntityCreateParams {
   tag: string;
   quota: number;
 }
 
-export class UserEntity extends BaseEntity<UserEntityProps> {
+export class UserEntity extends BaseEntity<User> {
   get apiKey() {
-    return this.$getOrThrow('apiKey');
+    return this.$get('apiKey');
   }
   get tag() {
-    return this.$getOrThrow('tag');
+    return this.$get('tag');
   }
   get quota() {
-    return this.$getOrThrow('quota');
+    return this.$get('quota');
   }
 
   static create(params: UserEntityCreateParams) {
@@ -55,6 +49,6 @@ export class UserEntity extends BaseEntity<UserEntityProps> {
     if (quota % 1 !== 0) {
       throw new BadRequestException('quota must be a int');
     }
-    this.$set('quota', this.$getOrThrow('quota') + quota);
+    this.$set('quota', this.quota + quota);
   }
 }

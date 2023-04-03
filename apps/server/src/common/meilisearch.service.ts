@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { Config } from '../config/config';
 
 @Injectable()
-export class MeilisearchClient extends Meilisearch implements OnModuleInit {
+export class MeilisearchService extends Meilisearch implements OnModuleInit {
   constructor(_configService: ConfigService<Config>) {
     super({
       host: _configService.getOrThrow('MEILISEARCH_ENDPOINT'),
@@ -14,14 +14,14 @@ export class MeilisearchClient extends Meilisearch implements OnModuleInit {
   }
 
   static Indexes = ['prompt', 'message', 'user'] as const;
-  static IndexEnum = z.enum(MeilisearchClient.Indexes).enum;
+  static IndexEnum = z.enum(MeilisearchService.Indexes).enum;
 
   async onModuleInit() {
     await this.initIndex();
   }
 
   async initIndex() {
-    const tasks = MeilisearchClient.Indexes.map(async (index) => {
+    const tasks = MeilisearchService.Indexes.map(async (index) => {
       try {
         await this.getIndex(index);
       } catch (error) {
